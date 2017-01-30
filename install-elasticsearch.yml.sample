@@ -1,0 +1,28 @@
+---
+- hosts: elasticsearch_master_data_nodes
+  name: Elasticsearch master and data node 
+  roles:
+    #expand to all available parameters
+    - { role: elasticsearch,
+        es_instance_name: "es1",
+        es_data_dirs: "/datadisk/elasticsearch/data",
+        es_log_dir: "/datadisk/elasticsearch/logs",
+        es_heap_size: "4g",
+    es_config: {
+        node.name: "node1",
+        cluster.name: "custom-cluster",
+        discovery.zen.ping.unicast.hosts: "node01, node02, node03",
+        network.host: "_eno33557248_, _eno16777984_, _local_",
+        node.data: true,
+        node.master: true,
+        http.port: "{{es_api_port}}",
+        transport.tcp.port:  "{{es_transport_port}}"
+        }
+    }
+
+  vars:
+    ansible_user: labadmin
+
+
+
+

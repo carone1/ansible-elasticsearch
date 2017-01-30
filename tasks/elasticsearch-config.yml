@@ -10,6 +10,7 @@
     - "{{conf_dir}}"
 
 - name: Create Data Directories
+  become: true
   file: path={{ item }} state=directory owner={{ es_user }} group={{ es_group }}
   with_items:
     - "{{data_dirs}}"

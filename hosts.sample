@@ -1,0 +1,16 @@
+
+
+[elasticsearch_master_nodes]
+
+[elasticsearch_master_data_nodes]
+node01
+node02
+node03
+
+[elasticsearch_data_nodes]
+
+[kibana]
+node01
+node02
+node03
+

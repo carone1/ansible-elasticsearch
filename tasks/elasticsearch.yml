@@ -11,3 +11,7 @@
 - name: Include specific Elasticsearch
   include: elasticsearch-RedHat.yml
   when: ansible_os_family == 'RedHat'
+
+- name: Include elasticsearch auto sizing
+  include: elasticsearch-memory-size.yml
+  when: es_auto_config_memory_size

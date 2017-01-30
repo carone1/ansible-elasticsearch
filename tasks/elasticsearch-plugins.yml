@@ -31,6 +31,7 @@
     ES_INCLUDE: "{{ instance_default_file }}"
 
 - name: Install elasticsearch plugins
+  become: true
   command: "{{es_home}}/bin/elasticsearch-plugin install {{ item.plugin }} --batch --silent {% if item.proxy_host is defined and item.proxy_host != '' and item.proxy_port is defined and item.proxy_port != ''%} -DproxyHost={{ item.proxy_host }} -DproxyPort={{ item.proxy_port }} {% elif es_proxy_host is defined and es_proxy_host != '' %} -DproxyHost={{ es_proxy_host }} -DproxyPort={{ es_proxy_port }} {% endif %}"
   register: plugin_installed
   failed_when: "'ERROR' in plugin_installed.stdout"

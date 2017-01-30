@@ -3,7 +3,15 @@
   yum: name=libselinux-python state=present update_cache=yes
   when: ( ansible_distribution == "CentOS" ) and ( ansible_distribution_major_version == "6" )
 
+- name: open firewall for port {{ item }}  
+  vars:
+    es_local_port: "{{item}}"
+  include: elasticsearch-firewall-RedHat.yml
+  with_items: "{{es_external_ports}}"
+  when : es_listen_external
+
 - name: RedHat - add Elasticsearch repo
+  become: true
   template: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch-{{ es_major_version }}.repo
   when: es_use_repository
 
@@ -23,3 +31,5 @@
   yum: name={% if es_custom_package_url is defined %}{{ es_custom_package_url }}{% else %}{{ es_package_url }}-{{ es_version }}.noarch.rpm{% endif %} state=present
   when: not es_use_repository
   register: elasticsearch_install_from_package
+
+
