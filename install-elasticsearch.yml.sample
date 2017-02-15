@@ -10,7 +10,7 @@
         es_heap_size: "4g",
     es_config: {
         node.name: "node1",
-        cluster.name: "custom-cluster",
+        cluster.name: "ecs-analytics",
         discovery.zen.ping.unicast.hosts: "node01, node02, node03",
         network.host: "_eno33557248_, _eno16777984_, _local_",
         node.data: true,
