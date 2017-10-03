@@ -4,7 +4,7 @@
 
 - name: Apply heapsize tuning for systems with greater than 64G memory
   lineinfile: dest=/usr/share/elasticsearch/bin/elasticsearch.in.sh \
-          line="ES_HEAP_SIZE=32g" insertafter="^ES_CLASSPATH="
+          line='ES_JAVA_OPTS="-Xms32g -Xmx32g"' insertafter="^ES_CLASSPATH="
   when: ansible_memory_mb.real.total|int >= 65536
   register: elasticsearch_updated
 
@@ -14,6 +14,9 @@
 
 - name: Update elasticsearch startup with heap size
   lineinfile: dest=/usr/share/elasticsearch/bin/elasticsearch.in.sh \
-          line="ES_HEAP_SIZE={{ (ansible_memory_mb.real.total / 2) | int }}m" insertafter="^ES_CLASSPATH="
+          line='ES_JAVA_OPTS="-Xms{{ (ansible_memory_mb.real.total / 2) | int }}m -Xmx{{ (ansible_memory_mb.real.total / 2) | int }}m"' insertafter="^ES_CLASSPATH="
   when: ansible_memory_mb.real.total|int < 65536
   register: elasticsearch_updated
+
+
+# line="ES_HEAP_SIZE={{ (ansible_memory_mb.real.total / 2) | int }}m" insertafter="^ES_CLASSPATH="
