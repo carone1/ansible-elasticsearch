@@ -7,6 +7,10 @@
 #Security configuration
 - include: security/elasticsearch-security.yml
 
+# Enable TLS/SSL encryption
+- include: elasticsearch-xpack-certificate-install.yml
+  when: es_enable_xpack and (use_xpack_certificate is defined) and use_xpack_certificate
+
 #Add any feature specific configuration here
 - name: Set Plugin Directory Permissions
   file: state=directory path={{ es_home }}/plugins owner={{ es_user }} group={{ es_group }} recurse=yes

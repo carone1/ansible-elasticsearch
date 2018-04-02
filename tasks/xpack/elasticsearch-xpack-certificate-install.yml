@@ -1,0 +1,104 @@
+---
+
+- name: Check if  xpack Certificate is already downloaded
+  stat:
+    path: "{{ conf_dir }}/{{ node_crt }}"
+  register: xpack_crt_downloaded
+  changed_when: false
+  tags:
+    - xpack_certificate
+
+- name: Remove already downloaded xpack Certificate
+  become: yes
+  file:
+    path: "{{ conf_dir }}/{{ node_crt }}"
+    state: absent
+  changed_when: xpack_crt_downloaded.stat.exists == true
+  tags:
+    - xpack_certificate
+
+- name: "Download x-pack Certificate from local hosts"
+  become: yes
+  copy:
+    src: "{{ local_certificate_conf_dir }}/{{ node_crt }}"
+    dest: "{{ conf_dir }}"
+  register: xpack_certificate_download
+  tags:
+    - xpack_certificate
+
+- name: Check if downloaded x-pack Certificate is present locally and not empty
+  stat:
+    path: "{{ conf_dir }}/{{ node_crt }}"
+  register: xpack_crt_certificate_stat
+  failed_when: ( (xpack_crt_certificate_stat.stat.exists == false ) or (xpack_crt_certificate_stat.stat.size == 0) )
+  tags:
+    - xpack_certificate
+
+- name: Check if  x-pack Key certificate is already downloaded
+  stat:
+    path: "{{ conf_dir }}/{{ node_key }}"
+  register: xpack_key_downloaded
+  changed_when: false
+  tags:
+    - xpack_certificate
+
+- name: Remove already downloaded x-pack key
+  become: yes
+  file:
+    path: "{{ conf_dir }}/{{ node_key }}"
+    state: absent
+  changed_when: xpack_key_downloaded.stat.exists == true
+  tags:
+    - xpack_certificate
+
+- name: "Download x-pack key certificate from local hosts"
+  become: yes
+  copy:
+    src: "{{ local_certificate_conf_dir }}/{{ node_key }}"
+    dest: "{{ conf_dir }}"
+  register: xpack_key_download
+  tags:
+    - xpack_certificate
+
+- name: Check if downloaded x-pack key certificate is present locally and not empty
+  stat:
+    path: "{{ conf_dir }}/{{ node_key }}"
+  register: xpack_key_certificate_stat
+  failed_when: ( (xpack_key_certificate_stat.stat.exists == false ) or (xpack_key_certificate_stat.stat.size == 0) )
+  tags:
+    - xpack_certificate
+
+- name: Check if  x-pack authorities certificate is already downloaded
+  stat:
+    path: "{{ conf_dir }}/{{ node_ca }}"
+  register: xpack_ca_downloaded
+  changed_when: false
+  tags:
+    - xpack_certificate
+
+- name: Remove already downloaded x-pack authorities certificate
+  become: yes
+  file:
+    path: "{{ conf_dir }}/{{ node_ca }}"
+    state: absent
+  changed_when: xpack_ca_downloaded.stat.exists == true
+  tags:
+    - xpack_certificate
+
+- name: "Download x-pack authorities certificate from local hosts"
+  become: yes
+  copy:
+    src: "{{ local_certificate_conf_dir }}/{{ node_ca }}"
+    dest: "{{ conf_dir }}"
+  register: xpack_ca_download
+  tags:
+    - xpack_certificate
+
+- name: Check if downloaded x-pack authorities certificate is present locally and not empty
+  stat:
+    path: "{{ conf_dir }}/{{ node_ca }}"
+  register: xpack_ca_certificate_stat
+  failed_when: ( (xpack_ca_certificate_stat.stat.exists == false ) or (xpack_ca_certificate_stat.stat.size == 0) )
+  tags:
+    - xpack_certificate
+
