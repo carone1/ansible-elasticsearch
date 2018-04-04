@@ -323,7 +323,7 @@ In order for native users and roles to be configured, the role calls the Elastic
 
 These can either be set to a user declared in the file based realm, with admin permissions, or the default "elastic" superuser (default password is changeme).
 
-####X-Pack and SSL features
+#### X-Pack and SSL features
 
 In order for X-Pack to enforce security and encrypt traffic to, from and within your Elasticsearch cluster, define following properties in elasticsearch configuration via es_config.  
 
