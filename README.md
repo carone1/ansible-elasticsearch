@@ -373,8 +373,8 @@ roles:
      node_key: "node01.key"
      node_ca: "ca.crt"
 ```
-
-
+#### Important note on certificates
+ Certificates that you obtain must allow for both clientAuth and serverAuth if the extended key usage extension is present. The certificates need to be in PEM format. Although not required, it is highly recommended that the certificate contain the dns name(s) and/or ip address(es) of the node so that hostname verification may be used.
 
 
 
